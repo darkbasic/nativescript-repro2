@@ -10,6 +10,8 @@ import { Apollo, ApolloModule } from "apollo-angular";
 import { HttpLink, HttpLinkModule } from "apollo-angular-link-http";
 import { Options } from "apollo-angular-link-http-common";
 import { InMemoryCache } from "apollo-cache-inmemory";
+import { WebSocketLink } from "apollo-link-ws";
+import * as SocketIO from "nativescript-socket.io";
 
 // Uncomment and add to NgModule imports if you need to use two-way binding
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
@@ -51,6 +53,14 @@ export class AppModule {
     apollo.create({
       link: httpLink.create(<Options>{uri: 'http://localhost:3000/graphql'}),
       cache: new InMemoryCache(),
+    });
+
+    const subscriptionLink = new WebSocketLink({
+      uri: 'ws://localhost:3000/subscriptions',
+      options: {
+        reconnect: true,
+      },
+      webSocketImpl: SocketIO,
     });
   }
 }
