@@ -4,6 +4,8 @@ tags
 **/*.js.map
 **/*.metadata.json
 
+platforms/
+
 /hooks
 
 .tscache
